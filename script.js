@@ -85,6 +85,47 @@ const translations = {
     "settings.storage-title": "Your data stays on this device",
     "settings.storage-description": "Tasks and preferences are saved in this browser.",
     "settings.storage-error": "Your data could not be saved or loaded. Check this browser's storage settings.",
+    "auth.eyebrow": "YOUR PERSONAL ACCOUNT",
+    "auth.title": "Save your plans across devices",
+    "auth.description": "Create a secure account or sign in to sync your tasks and notes.",
+    "auth.account-title": "Your account",
+    "auth.local-mode": "Using this device without an account.",
+    "auth.sign-in": "Sign in",
+    "auth.sign-up": "Create account",
+    "auth.sign-out": "Sign out",
+    "auth.create-account": "New here? Create an account",
+    "auth.switch-to-sign-in": "Already have an account? Sign in",
+    "auth.email": "Email address",
+    "auth.password": "Password (at least 8 characters)",
+    "auth.close": "Close",
+    "auth.privacy": "Your tasks are private to your account.",
+    "auth.not-configured": "Firebase is not configured yet. Add your web app settings in firebase-config.js.",
+    "auth.loading": "Connecting securely...",
+    "auth.ready": "Firebase is ready. Sign in or create an account to sync your data.",
+    "auth.signed-in": "Signed in as {email}",
+    "auth.synced": "Signed in as {email}. Your tasks are syncing.",
+    "auth.syncing": "Syncing your tasks securely...",
+    "auth.sync-error": "Cloud sync failed. Your saved tasks are still available on this device.",
+    "auth.network-error": "Could not connect. Check your internet connection and try again.",
+    "auth.invalid-api-key": "Firebase rejected this Web API key. Check that it belongs to this project and is allowed to use Firebase Authentication.",
+    "auth.provider-disabled": "Email/password sign-in is not enabled for this Firebase project.",
+    "auth.domain-not-authorized": "This site is not an authorized Firebase Authentication domain. Add it in Firebase Console under Authentication settings.",
+    "auth.error-generic": "We couldn't complete that request. Please try again.",
+    "auth.invalid-email": "Enter a valid email address.",
+    "auth.email-in-use": "An account already uses that email. Try signing in.",
+    "auth.weak-password": "Choose a password with at least 8 characters.",
+    "auth.invalid-credentials": "Email or password is incorrect.",
+    "auth.verify-required": "Check your inbox and verify your email before syncing.",
+    "auth.verify-sent": "Verification email sent. Check your inbox.",
+    "auth.resend": "Resend verification email",
+    "auth.check-verification": "I've verified my email",
+    "auth.account-created": "Account created. Verify your email before syncing.",
+    "auth.signed-out": "You are signed out. Your local tasks remain on this device.",
+    "install.button": "Install",
+    "install.eyebrow": "YOUR TASKS, ONE TAP AWAY",
+    "install.title": "Add My Daily Tasks to your device",
+    "install.description": "Install the app for a focused, app-like experience.",
+    "install.ios-help": "On iPhone or iPad: tap Share in Safari, then choose Add to Home Screen.",
     "about.eyebrow": "A LITTLE ABOUT US",
     "about.title": "A calmer way to get things done.",
     "about.description": "My Daily Tasks helps you make a simple plan, celebrate small wins, and keep your day moving at your own pace. Your tasks, notes, and preferences stay saved on this device.",
@@ -173,6 +214,47 @@ const translations = {
     "settings.storage-title": "Xogtaadu qalabkan ayay ku jiraysaa",
     "settings.storage-description": "Hawlaha iyo doorashooyinka waxaa lagu kaydiyaa biraawsarkan.",
     "settings.storage-error": "Xogta lama kaydin ama lama soo rari karin. Hubi dejimaha kaydinta biraawsarka.",
+    "auth.eyebrow": "AKOONKAAGA GAARKA AH",
+    "auth.title": "Qorshahaaga qalab kasta ka isticmaal",
+    "auth.description": "Samee akoon ammaan ah ama gal si hawlahaaga iyo qoraalladaadu u wada shaqeeyaan.",
+    "auth.account-title": "Akoonkaaga",
+    "auth.local-mode": "Qalabkan ayaad isticmaalaysaa adigoon akoon lahayn.",
+    "auth.sign-in": "Gal",
+    "auth.sign-up": "Samee akoon",
+    "auth.sign-out": "Ka bax",
+    "auth.create-account": "Akoon ma lihid? Samee mid cusub",
+    "auth.switch-to-sign-in": "Akoon ma leedahay? Gal",
+    "auth.email": "Cinwaanka iimaylka",
+    "auth.password": "Furaha sirta ah (ugu yaraan 8 xaraf)",
+    "auth.close": "Xir",
+    "auth.privacy": "Hawlahaagu akoonkaaga oo keliya ayay u gaar yihiin.",
+    "auth.not-configured": "Firebase weli lama dejin. Geli xogta Web App-kaaga faylka firebase-config.js.",
+    "auth.loading": "Si ammaan ah ayaa loo xiriirayaa...",
+    "auth.ready": "Firebase waa diyaar. Gal ama samee akoon si xogtaadu u wada shaqayso.",
+    "auth.signed-in": "Waxaad ku gashay {email}",
+    "auth.synced": "Waxaad ku gashay {email}. Hawlahaaga waa la waafajinayaa.",
+    "auth.syncing": "Hawlahaaga si ammaan ah ayaa loo waafajinayaa...",
+    "auth.sync-error": "Kaydinta cloud-ka way fashilantay. Hawlaha qalabkan ku kaydsan weli way kuu diyaar yihiin.",
+    "auth.network-error": "Xiriir lama helin. Hubi internetka oo mar kale isku day.",
+    "auth.invalid-api-key": "Firebase wuu diiday Web API key-ga. Hubi inuu mashruucan ka yimid oo loo oggol yahay Firebase Authentication.",
+    "auth.provider-disabled": "Email/Password lagama shidin Firebase Authentication-ka project-kan.",
+    "auth.domain-not-authorized": "Domain-kan looma oggola Firebase Authentication. Ka dar Firebase Console qaybta Authentication settings.",
+    "auth.error-generic": "Codsiga lama dhammaystiri karin. Mar kale isku day.",
+    "auth.invalid-email": "Geli cinwaan iimayl oo sax ah.",
+    "auth.email-in-use": "Iimaylkan akoon ayaa ku jira. Isku day inaad gasho.",
+    "auth.weak-password": "Dooro furaha sirta ah oo ugu yaraan 8 xaraf ah.",
+    "auth.invalid-credentials": "Iimaylka ama furaha sirta ahi waa khaldan yahay.",
+    "auth.verify-required": "Fur iimaylkaaga oo xaqiiji cinwaanka ka hor kaydinta.",
+    "auth.verify-sent": "Iimayl xaqiijin ah ayaa laguu diray. Ka eeg sanduuqa iimaylka.",
+    "auth.resend": "Dib u dir iimaylka xaqiijinta",
+    "auth.check-verification": "Waan xaqiijiyay iimaylkayga",
+    "auth.account-created": "Akoonka waa la sameeyay. Xaqiiji iimaylka ka hor kaydinta.",
+    "auth.signed-out": "Waad ka baxday. Hawlaha qalabkan ku kaydsan ma luminayaan.",
+    "install.button": "Ku rakib",
+    "install.eyebrow": "HAWLAHAAGA HAL TAABASHO",
+    "install.title": "My Daily Tasks ku dar qalabkaaga",
+    "install.description": "Ku rakib app-ka si aad si fudud ugu isticmaasho.",
+    "install.ios-help": "iPhone ama iPad: Safari taabo Share, kadib dooro Add to Home Screen.",
     "about.eyebrow": "NAGU SAABSAN",
     "about.title": "Hab deggan oo hawlaha lagu dhammeeyo.",
     "about.description": "My Daily Tasks wuxuu kaa caawinayaa inaad samaysato qorshe fudud, ku faraxdo guulaha yaryar, maalintaadana ugu socoto xawaarahaaga. Hawlahaaga, qoraalladaada iyo doorashooyinkaagu qalabkan ayay ku kaydsan yihiin.",
@@ -221,6 +303,8 @@ let selectedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate
 let language = "en";
 let notesHaveError = false;
 let tasksHaveError = false;
+let signedInEmail = "";
+let signedInVerified = false;
 
 function translate(key, values = {}) {
   return translations[language][key].replace(/\{(\w+)\}/g, (match, name) => values[name] ?? match);
@@ -256,7 +340,7 @@ function loadTasks() {
 
 let tasks = loadTasks();
 
-function saveTasks() {
+function saveTasks({ broadcast = true } = {}) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
     tasksHaveError = false;
@@ -265,10 +349,22 @@ function saveTasks() {
     tasksHaveError = true;
   }
   updateStorageStatus();
+  if (broadcast) dispatchLocalDataChange();
 }
 
 function updateStorageStatus() {
   storageStatus.textContent = translate(tasksHaveError ? "settings.storage-error" : "settings.storage-description");
+}
+
+function dispatchLocalDataChange() {
+  window.dispatchEvent(new CustomEvent("mydaily:local-data-change", {
+    detail: {
+      tasks,
+      notes: notesInput.value,
+      language,
+      theme: document.body.dataset.theme || loadTheme()
+    }
+  }));
 }
 
 function updateDate() {
@@ -386,11 +482,17 @@ function setLanguage(nextLanguage) {
   });
 
   notesStatus.textContent = translate(notesHaveError ? "notes.save-error" : "notes.saved");
+  if (signedInEmail && signedInVerified) {
+    document.querySelectorAll(".account-button [data-i18n]").forEach((label) => {
+      label.textContent = signedInEmail;
+    });
+  }
   updateStorageStatus();
   updateDate();
   setTheme(document.body.dataset.theme || loadTheme());
   renderCalendar();
   renderTasks();
+  window.dispatchEvent(new CustomEvent("mydaily:language-changed", { detail: { language } }));
 }
 
 function loadTheme() {
@@ -603,6 +705,7 @@ languageButtons.forEach((button) => {
     } catch (error) {
       console.error("Could not save language preference:", error);
     }
+    dispatchLocalDataChange();
   });
 });
 document.querySelector("#previous-month").addEventListener("click", () => {
@@ -624,6 +727,7 @@ notesInput.addEventListener("input", () => {
     notesHaveError = true;
     notesStatus.textContent = translate("notes.save-error");
   }
+  dispatchLocalDataChange();
 });
 themeToggles.forEach((button) => {
   button.addEventListener("click", () => {
@@ -634,8 +738,78 @@ themeToggles.forEach((button) => {
     } catch (error) {
       console.error("Could not save theme preference:", error);
     }
+    dispatchLocalDataChange();
   });
 });
 
 setLanguage(loadLanguage());
 notesInput.value = loadNotes();
+window.addEventListener("mydaily:remote-data", (event) => {
+  const { tasks: remoteTasks, notes, language: remoteLanguage, theme: remoteTheme } = event.detail;
+  let shouldRenderTasks = false;
+  if (Array.isArray(remoteTasks)) {
+    tasks = remoteTasks;
+    saveTasks({ broadcast: false });
+    shouldRenderTasks = true;
+  }
+  if (remoteLanguage === "en" || remoteLanguage === "so") {
+    try {
+      localStorage.setItem(LANGUAGE_STORAGE_KEY, remoteLanguage);
+    } catch (error) {
+      console.error("Could not save synced language preference locally:", error);
+    }
+    if (language !== remoteLanguage) {
+      setLanguage(remoteLanguage);
+      shouldRenderTasks = false;
+    }
+  }
+  if (remoteTheme === "light" || remoteTheme === "dark") {
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, remoteTheme);
+    } catch (error) {
+      console.error("Could not save synced theme preference locally:", error);
+    }
+    setTheme(remoteTheme);
+  }
+  if (typeof notes === "string") {
+    notesInput.value = notes;
+    try {
+      localStorage.setItem(NOTES_STORAGE_KEY, notes);
+      notesHaveError = false;
+      notesStatus.textContent = translate("notes.saved");
+    } catch (error) {
+      console.error("Could not save synced notes locally:", error);
+      notesHaveError = true;
+      notesStatus.textContent = translate("notes.save-error");
+    }
+  }
+  if (shouldRenderTasks) renderTasks();
+});
+window.addEventListener("mydaily:auth-state", (event) => {
+  const { email, verified, statusKey } = event.detail;
+  signedInEmail = email || "";
+  signedInVerified = Boolean(verified);
+  const accountButtons = document.querySelectorAll(".account-button");
+  const accountStatus = document.querySelector("#account-status");
+  accountButtons.forEach((button) => {
+    button.dataset.signedIn = String(Boolean(email && verified));
+    button.setAttribute("aria-label", email && verified ? email : translate("auth.sign-in"));
+    const label = button.querySelector("[data-i18n]");
+    if (label) label.textContent = email && verified ? email : translate("auth.sign-in");
+  });
+  accountStatus.textContent = translate(statusKey || "auth.local-mode", { email: email || "" });
+});
+window.addEventListener("mydaily:cloud-status", (event) => {
+  const { statusKey, email } = event.detail;
+  document.querySelector("#account-status").textContent = translate(statusKey, { email: email || "" });
+  updateStorageStatus();
+});
+window.addEventListener("mydaily:auth-error", (event) => {
+  const status = document.querySelector("#auth-status");
+  status.dataset.statusKey = event.detail.statusKey;
+  status.textContent = translate(event.detail.statusKey);
+});
+window.addEventListener("mydaily:language-changed", () => {
+  const authStatusKey = document.querySelector("#auth-status").dataset.statusKey;
+  if (authStatusKey) document.querySelector("#auth-status").textContent = translate(authStatusKey);
+});

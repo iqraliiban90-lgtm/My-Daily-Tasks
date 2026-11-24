@@ -2363,3 +2363,295 @@ body[data-theme="dark"] .task-edit-cancel {
     text-align: center;
   }
 }
+
+.account-button,
+.install-button {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 11px;
+  border: 1px solid #e1e7f0;
+  border-radius: 10px;
+  color: #34425a;
+  background: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 650;
+  transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
+}
+
+.account-button:hover,
+.install-button:hover {
+  transform: translateY(-1px);
+  border-color: #b9c9e6;
+  background: #f7f9fd;
+}
+
+.settings-account-button {
+  flex: 0 0 auto;
+  color: white;
+  background: #203c63;
+}
+
+.account-setting-icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 11px;
+  color: #6485e8;
+  background: #edf2ff;
+}
+
+.app-dialog {
+  position: fixed;
+  width: min(440px, calc(100% - 32px));
+  max-width: none;
+  max-height: min(90vh, 760px);
+  overflow: auto;
+  padding: 28px;
+  border: 1px solid #e7edf5;
+  border-radius: 20px;
+  color: var(--ink);
+  background: var(--paper);
+  box-shadow: 0 26px 90px rgba(13, 30, 55, 0.25);
+}
+
+.app-dialog::backdrop {
+  background: rgba(15, 29, 49, 0.57);
+  backdrop-filter: blur(4px);
+}
+
+.dialog-close-form {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.dialog-close {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 0;
+  border-radius: 10px;
+  color: #718198;
+  background: #f0f3f8;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.dialog-brand {
+  display: grid;
+  width: 43px;
+  height: 43px;
+  margin-bottom: 17px;
+  place-items: center;
+  border-radius: 13px;
+  color: #fff;
+  background: #203c63;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.app-dialog h2 {
+  margin: 8px 0;
+  color: var(--navy);
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.dialog-description,
+.dialog-footnote {
+  color: #8290a3;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.dialog-user {
+  overflow-wrap: anywhere;
+  color: #5279dc;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.auth-form {
+  display: grid;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.auth-form label {
+  margin-top: 7px;
+  color: #53647b;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.auth-form input {
+  width: 100%;
+  min-height: 45px;
+  padding: 0 12px;
+  border: 1px solid #dfe6f0;
+  border-radius: 10px;
+  outline: 0;
+  color: #34425a;
+  background: #fff;
+  font: inherit;
+  font-size: 13px;
+}
+
+.auth-form input:focus {
+  border-color: #8ba9ff;
+  box-shadow: 0 0 0 3px rgba(99, 134, 239, 0.13);
+}
+
+.auth-submit {
+  display: grid;
+  width: 100%;
+  min-height: 45px;
+  margin-top: 9px;
+  place-items: center;
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  background: #203c63;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.auth-submit:hover {
+  background: #294a78;
+}
+
+.auth-submit:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.auth-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 15px;
+  margin-top: 13px;
+}
+
+.dialog-text-button {
+  padding: 5px 0;
+  border: 0;
+  color: #5279dc;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 650;
+  text-align: left;
+}
+
+.dialog-status {
+  min-height: 18px;
+  margin: 12px 0 0;
+  color: #9c4452;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.dialog-footnote {
+  margin: 7px 0 0;
+  font-size: 10px;
+}
+
+.install-confirm[hidden],
+.auth-form[hidden],
+.auth-actions [hidden],
+.install-help[hidden],
+.install-button[hidden],
+.account-button[hidden] {
+  display: none;
+}
+
+body[data-theme="dark"] .account-button,
+body[data-theme="dark"] .install-button {
+  border-color: #334258;
+  color: #d4dfed;
+  background: #1b293b;
+}
+
+body[data-theme="dark"] .settings-account-button {
+  border-color: #40526b;
+  background: #293a58;
+}
+
+body[data-theme="dark"] .app-dialog {
+  border-color: #334258;
+  color: #d4dfed;
+  background: #1b293b;
+}
+
+body[data-theme="dark"] .dialog-close,
+body[data-theme="dark"] .auth-form input {
+  border-color: #40526b;
+  color: #d4dfed;
+  background: #111c2c;
+}
+
+body[data-theme="dark"] .auth-form label {
+  color: #bdc9da;
+}
+
+@media (max-width: 860px) {
+  .app-main .header-actions {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 560px) {
+  .app-main .header-actions {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 5px;
+  }
+
+  .app-main .account-button,
+  .app-main .install-button {
+    width: 34px;
+    min-width: 34px;
+    min-height: 34px;
+    gap: 0;
+    padding: 0;
+    font-size: 0;
+  }
+
+  .app-main .account-button > span:first-child,
+  .app-main .install-button > span:first-child {
+    font-size: 15px;
+  }
+
+  .settings-account-button {
+    width: auto;
+    min-width: 0;
+    min-height: 34px;
+    padding: 0 10px;
+    font-size: 10px;
+  }
+
+  .settings-account-button > span:first-child {
+    font-size: 10px !important;
+  }
+
+  .app-dialog {
+    padding: 23px 20px;
+    border-radius: 17px;
+  }
+
+  .app-dialog h2 {
+    font-size: 19px;
+  }
+}

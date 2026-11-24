@@ -5,9 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f5f7fb">
   <meta name="description" content="Plan your day, track your goals, and celebrate progress with My Daily Tasks.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="My Daily Tasks">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/app-icon.svg" type="image/svg+xml">
+  <link rel="icon" href="icons/app-icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="icons/app-icon-180.png">
   <title>My Daily Tasks – Daily Productivity App</title>
-  <link rel="stylesheet" href="style.css?v=cf343ce">
-  <script src="script.js?v=app-name-1" defer></script>
+  <link rel="stylesheet" href="style.css?v=platform-upgrade-2">
+  <script src="script.js?v=platform-upgrade-3" defer></script>
+  <script type="module" src="firebase.js?v=platform-upgrade-4"></script>
 </head>
 <body>
   <div class="app-shell">
@@ -87,6 +95,14 @@
           <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
             <span class="theme-icon" aria-hidden="true">☾</span>
             <span class="theme-label" data-i18n="theme.dark">Dark mode</span>
+          </button>
+          <button class="account-button" id="account-button" type="button">
+            <span aria-hidden="true">♙</span>
+            <span data-i18n="auth.sign-in">Sign in</span>
+          </button>
+          <button class="install-button" id="install-button" type="button">
+            <span aria-hidden="true">⇩</span>
+            <span data-i18n="install.button">Install</span>
           </button>
         </div>
       </header>
@@ -244,6 +260,16 @@
                 <p id="storage-status" aria-live="polite" data-i18n="settings.storage-description">Tasks and preferences are saved in this browser.</p>
               </div>
             </section>
+            <section class="setting-card account-setting" aria-labelledby="settings-account-title">
+              <span class="account-setting-icon" aria-hidden="true">♙</span>
+              <div class="setting-card-copy">
+                <h3 id="settings-account-title" data-i18n="auth.account-title">Your account</h3>
+                <p id="account-status" aria-live="polite" data-i18n="auth.local-mode">Using this device without an account.</p>
+              </div>
+              <button class="account-button settings-account-button" id="settings-account-button" type="button">
+                <span data-i18n="auth.sign-in">Sign in</span>
+              </button>
+            </section>
           </div>
         </section>
 
@@ -264,5 +290,43 @@
       </footer>
     </div>
   </div>
+
+  <dialog class="app-dialog" id="auth-dialog" aria-labelledby="auth-dialog-title">
+    <form class="dialog-close-form" method="dialog">
+      <button class="dialog-close" type="submit" aria-label="Close" data-i18n-aria-label="auth.close">×</button>
+    </form>
+    <div class="dialog-brand" aria-hidden="true">✓</div>
+    <span class="eyebrow section-eyebrow" data-i18n="auth.eyebrow">YOUR PERSONAL ACCOUNT</span>
+    <h2 id="auth-dialog-title" data-i18n="auth.title">Save your plans across devices</h2>
+    <p class="dialog-description" data-i18n="auth.description">Create a secure account or sign in to sync your tasks and notes.</p>
+    <p class="dialog-user" id="auth-user" hidden></p>
+    <form class="auth-form" id="auth-form">
+      <label for="auth-email" data-i18n="auth.email">Email address</label>
+      <input id="auth-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+      <label for="auth-password" data-i18n="auth.password">Password (at least 8 characters)</label>
+      <input id="auth-password" name="password" type="password" autocomplete="current-password" minlength="8" required>
+      <button class="auth-submit" id="auth-submit" type="submit" data-i18n="auth.sign-in">Sign in</button>
+    </form>
+    <div class="auth-actions">
+      <button class="dialog-text-button" id="auth-mode-toggle" type="button" data-i18n="auth.create-account">Create an account</button>
+      <button class="dialog-text-button" id="auth-logout" type="button" data-i18n="auth.sign-out" hidden>Sign out</button>
+      <button class="dialog-text-button" id="auth-resend-verification" type="button" data-i18n="auth.resend" hidden>Resend verification email</button>
+      <button class="dialog-text-button" id="auth-check-verification" type="button" data-i18n="auth.check-verification" hidden>I've verified my email</button>
+    </div>
+    <p class="dialog-status" id="auth-status" role="status" aria-live="polite"></p>
+    <p class="dialog-footnote" data-i18n="auth.privacy">Your tasks are private to your account.</p>
+  </dialog>
+
+  <dialog class="app-dialog install-dialog" id="install-dialog" aria-labelledby="install-dialog-title">
+    <form class="dialog-close-form" method="dialog">
+      <button class="dialog-close" type="submit" aria-label="Close" data-i18n-aria-label="auth.close">×</button>
+    </form>
+    <div class="dialog-brand" aria-hidden="true">⇩</div>
+    <span class="eyebrow section-eyebrow" data-i18n="install.eyebrow">YOUR TASKS, ONE TAP AWAY</span>
+    <h2 id="install-dialog-title" data-i18n="install.title">Add My Daily Tasks to your device</h2>
+    <p class="dialog-description" id="install-description" data-i18n="install.description">Install the app for a focused, app-like experience.</p>
+    <button class="auth-submit install-confirm" id="install-confirm" type="button" data-i18n="install.button">Install</button>
+    <p class="dialog-footnote" id="install-help" data-i18n="install.ios-help" hidden>On iPhone or iPad: tap Share in Safari, then choose Add to Home Screen.</p>
+  </dialog>
 </body>
 </html>

@@ -1,0 +1,19 @@
+{
+  "name": "my-daily-tasks",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build:web": "node scripts/copy-web.mjs",
+    "ios:add": "npm run build:web && cap add ios",
+    "ios:sync": "npm run build:web && cap sync ios",
+    "ios:open": "cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "^8.6.2",
+    "@capacitor/ios": "^8.6.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.6.2"
+  }
+}
