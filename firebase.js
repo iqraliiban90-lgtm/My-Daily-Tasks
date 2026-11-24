@@ -226,6 +226,9 @@ function authErrorKey(error) {
   if (typeof error?.code === "string" && error.code.includes("api-key-not-valid")) {
     return "auth.invalid-api-key";
   }
+  if (typeof error?.code === "string" && error.code.toLowerCase().includes("configuration-not-found")) {
+    return "auth.firebase-auth-not-configured";
+  }
 
   const errorKeys = {
     "auth/invalid-email": "auth.invalid-email",
@@ -233,6 +236,7 @@ function authErrorKey(error) {
     "auth/weak-password": "auth.weak-password",
     "auth/api-key-not-valid": "auth.invalid-api-key",
     "auth/operation-not-allowed": "auth.provider-disabled",
+    "auth/configuration-not-found": "auth.firebase-auth-not-configured",
     "auth/unauthorized-domain": "auth.domain-not-authorized",
     "auth/invalid-credential": "auth.invalid-credentials",
     "auth/user-not-found": "auth.invalid-credentials",

@@ -1,9 +1,9 @@
-const CACHE_NAME = "my-daily-tasks-v6";
+const CACHE_NAME = "my-daily-tasks-v7";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./style.css?v=platform-upgrade-2",
-  "./script.js?v=platform-upgrade-3",
+  "./script.js?v=platform-upgrade-4",
   "./firebase.js?v=platform-upgrade-4",
   "./firebase-config.js",
   "./manifest.webmanifest",
