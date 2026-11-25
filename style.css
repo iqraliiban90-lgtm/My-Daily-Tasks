@@ -2364,8 +2364,267 @@ body[data-theme="dark"] .task-edit-cancel {
   }
 }
 
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 24px auto 0;
+  width: min(1120px, calc(100% - 64px));
+}
+
+.stat-card {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--paper);
+  box-shadow: 0 5px 16px rgba(37, 57, 84, 0.035);
+}
+
+.stat-card > span {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.stat-card strong {
+  color: var(--navy);
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  font-size: 24px;
+  line-height: 1.15;
+}
+
+.stat-card small {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.app-main .add-task-form {
+  display: grid;
+  gap: 5px;
+  padding: 8px 10px;
+}
+
+.task-input-row {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px 14px;
+  padding-left: 35px;
+}
+
+.task-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.task-options input,
+.task-options select {
+  max-width: 125px;
+  min-height: 28px;
+  padding: 3px 6px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  color: var(--ink);
+  background: var(--paper);
+  font-size: 10px;
+}
+
+.task-details {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.task-edit-form {
+  flex-wrap: wrap;
+}
+
+.task-edit-form input[type="date"],
+.task-edit-form input[type="time"],
+.task-edit-form select {
+  width: auto;
+  flex: 0 1 145px;
+  min-height: 34px;
+  padding: 0 7px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  color: var(--ink);
+  background: var(--paper);
+  font: inherit;
+  font-size: 10px;
+}
+
+.task-edit-actions {
+  margin-left: auto;
+}
+
+.profile-form {
+  display: grid;
+  max-width: 480px;
+  gap: 9px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--paper);
+}
+
+.profile-form[hidden] {
+  display: none;
+}
+
+.profile-form label {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.profile-form input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 11px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  color: var(--ink);
+  background: var(--paper);
+  font: inherit;
+  font-size: 12px;
+}
+
+.profile-form input:focus {
+  outline: 2px solid #91adff;
+  outline-offset: 1px;
+}
+
+.profile-form .auth-submit {
+  margin-top: 6px;
+}
+
+.google-sign-in {
+  display: flex;
+  width: 100%;
+  min-height: 43px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--ink);
+  background: var(--paper);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.google-sign-in > span:first-child {
+  color: #4285f4;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.google-sign-in:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.google-sign-in[hidden] {
+  display: none;
+}
+
+body[data-theme="dark"] .stat-card,
+body[data-theme="dark"] .profile-form {
+  border-color: #2b3a50;
+  background: #1b293b;
+}
+
+body[data-theme="dark"] .stat-card strong {
+  color: #d7e5ff;
+}
+
+body[data-theme="dark"] .task-options input,
+body[data-theme="dark"] .task-options select,
+body[data-theme="dark"] .task-edit-form input[type="date"],
+body[data-theme="dark"] .task-edit-form input[type="time"],
+body[data-theme="dark"] .task-edit-form select,
+body[data-theme="dark"] .profile-form input,
+body[data-theme="dark"] .google-sign-in {
+  border-color: #40526b;
+  color: #d4dfed;
+  background: #111c2c;
+}
+
+@media (max-width: 760px) {
+  .stats-grid {
+    width: min(1120px, calc(100% - 40px));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .stats-grid {
+    width: calc(100% - 32px);
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .stat-card {
+    padding: 13px;
+  }
+
+  .stat-card strong {
+    font-size: 21px;
+  }
+
+  .app-main .add-task-form {
+    gap: 8px;
+  }
+
+  .task-input-row {
+    flex-wrap: wrap;
+  }
+
+  .task-input-row input {
+    flex: 1;
+    min-width: 110px;
+  }
+
+  .task-options {
+    gap: 7px;
+    padding-left: 0;
+  }
+
+  .task-options label {
+    flex: 1 1 42%;
+    justify-content: space-between;
+  }
+
+  .task-options input,
+  .task-options select {
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
 .account-button,
-.install-button {
+.install-button,
+.notification-button {
   display: inline-flex;
   min-height: 36px;
   align-items: center;
@@ -2384,7 +2643,8 @@ body[data-theme="dark"] .task-edit-cancel {
 }
 
 .account-button:hover,
-.install-button:hover {
+.install-button:hover,
+.notification-button:hover {
   transform: translateY(-1px);
   border-color: #b9c9e6;
   background: #f7f9fd;
@@ -2394,6 +2654,11 @@ body[data-theme="dark"] .task-edit-cancel {
   flex: 0 0 auto;
   color: white;
   background: #203c63;
+}
+
+.notification-button {
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .account-setting-icon {
@@ -2573,12 +2838,16 @@ body[data-theme="dark"] .task-edit-cancel {
 .auth-actions [hidden],
 .install-help[hidden],
 .install-button[hidden],
-.account-button[hidden] {
+.account-button[hidden],
+#import-local-data[hidden],
+#profile-auth-required[hidden],
+.notification-button[hidden] {
   display: none;
 }
 
 body[data-theme="dark"] .account-button,
-body[data-theme="dark"] .install-button {
+body[data-theme="dark"] .install-button,
+body[data-theme="dark"] .notification-button {
   border-color: #334258;
   color: #d4dfed;
   background: #1b293b;

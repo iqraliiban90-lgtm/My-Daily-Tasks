@@ -1,10 +1,10 @@
-const CACHE_NAME = "my-daily-tasks-v7";
+const CACHE_NAME = "my-daily-tasks-v11";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./style.css?v=platform-upgrade-2",
-  "./script.js?v=platform-upgrade-4",
-  "./firebase.js?v=platform-upgrade-4",
+  "./style.css?v=platform-upgrade-5",
+  "./script.js?v=profile-privacy-1",
+  "./firebase.js?v=profile-privacy-1",
   "./firebase-config.js",
   "./manifest.webmanifest",
   "./icons/app-icon.svg",
@@ -61,5 +61,16 @@ self.addEventListener("fetch", (event) => {
         }
         return response;
       }))
+  );
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true })
+      .then((clients) => {
+        const appWindow = clients.find((client) => "focus" in client);
+        return appWindow ? appWindow.focus() : self.clients.openWindow("./");
+      })
   );
 });

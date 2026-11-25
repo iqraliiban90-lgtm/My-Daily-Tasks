@@ -2,6 +2,8 @@ const STORAGE_KEY = "my-daily-tasks";
 const NOTES_STORAGE_KEY = "my-daily-notes";
 const THEME_STORAGE_KEY = "my-daily-theme";
 const LANGUAGE_STORAGE_KEY = "my-daily-language";
+const NOTIFICATIONS_STORAGE_KEY = "my-daily-notifications";
+const IMPORT_STORAGE_KEY = "my-daily-imported";
 
 const translations = {
   en: {
@@ -14,6 +16,7 @@ const translations = {
     "nav.progress": "Progress",
     "nav.about": "About",
     "nav.settings": "Settings",
+    "nav.profile": "Profile",
     "language.label": "Language Settings",
     "sidebar.caption": "WORKSPACE",
     "header.kicker": "YOUR PERSONAL SPACE",
@@ -36,6 +39,12 @@ const translations = {
     "task.input-label": "What would you like to get done?",
     "task.placeholder": "What would you like to get done?",
     "task.create": "Create New Task",
+    "task.date": "Date",
+    "task.time": "Time",
+    "task.priority": "Priority",
+    "priority.low": "Low",
+    "priority.medium": "Medium",
+    "priority.high": "High",
     "task.filter-label": "Filter tasks",
     "task.filter-all": "All tasks",
     "task.filter-active": "To do",
@@ -63,6 +72,15 @@ const translations = {
     "progress.summary-started": "Nice work. Keep going, one step at a time.",
     "progress.summary-start": "You've got a fresh page. Pick one thing and start there.",
     "progress.count": "{completed} of {total} {tasks} done",
+    "stats.aria": "Task statistics",
+    "stats.total": "Total tasks",
+    "stats.total-caption": "Across your planner",
+    "stats.completed": "Completed",
+    "stats.completed-caption": "Tasks finished",
+    "stats.pending": "Pending",
+    "stats.pending-caption": "Still to do",
+    "stats.today": "Today",
+    "stats.today-caption": "Completed today",
     "calendar.eyebrow": "YOUR MONTH",
     "calendar.previous": "Previous month",
     "calendar.next": "Next month",
@@ -103,8 +121,8 @@ const translations = {
     "auth.firebase-auth-not-configured": "Firebase Authentication is not set up for this project yet. Open Authentication in Firebase Console and click Get started.",
     "auth.loading": "Connecting securely...",
     "auth.ready": "Firebase is ready. Sign in or create an account to sync your data.",
-    "auth.signed-in": "Signed in as {email}",
-    "auth.synced": "Signed in as {email}. Your tasks are syncing.",
+    "auth.signed-in": "Signed in. Your account is ready.",
+    "auth.synced": "Signed in. Your tasks are syncing.",
     "auth.syncing": "Syncing your tasks securely...",
     "auth.sync-error": "Cloud sync failed. Your saved tasks are still available on this device.",
     "auth.network-error": "Could not connect. Check your internet connection and try again.",
@@ -121,6 +139,30 @@ const translations = {
     "auth.resend": "Resend verification email",
     "auth.check-verification": "I've verified my email",
     "auth.account-created": "Account created. Verify your email before syncing.",
+    "auth.google": "Continue with Google",
+    "auth.forgot-password": "Forgot password?",
+    "auth.reset-sent": "Password reset email sent. Check your inbox.",
+    "auth.google-disabled": "Google sign-in is not enabled for this Firebase project.",
+    "profile.eyebrow": "YOUR ACCOUNT",
+    "profile.title": "Profile",
+    "profile.description": "Manage your name and account details.",
+    "profile.email": "Email address",
+    "profile.name": "Display name",
+    "profile.name-placeholder": "Your name",
+    "profile.save": "Save profile",
+    "profile.saving": "Saving your profile...",
+    "profile.saved": "Your profile was updated.",
+    "profile.save-error": "We couldn't update your profile. Please try again.",
+    "profile.import-error": "We couldn't import the tasks from this device.",
+    "profile.sign-in-required": "Sign in to manage your profile. Your on-device tasks stay separate until you choose to import them.",
+    "profile.import-local": "Import tasks from this device",
+    "notifications.title": "Task reminders",
+    "notifications.description": "Enable notifications to be reminded when a task is due.",
+    "notifications.enable": "Enable reminders",
+    "notifications.enabled": "Reminders are enabled on this device.",
+    "notifications.denied": "Notifications are blocked. Allow them in your browser settings.",
+    "notifications.unsupported": "This browser does not support task notifications.",
+    "notifications.task-due": "Task reminder",
     "auth.signed-out": "You are signed out. Your local tasks remain on this device.",
     "install.button": "Install",
     "install.eyebrow": "YOUR TASKS, ONE TAP AWAY",
@@ -144,6 +186,7 @@ const translations = {
     "nav.progress": "Horumarkayga",
     "nav.about": "Nagu saabsan",
     "nav.settings": "Dejimaha",
+    "nav.profile": "Akoon",
     "language.label": "Dejinta Luuqadda",
     "sidebar.caption": "GOOBTA SHAQADA",
     "header.kicker": "GOOBTAADA GAARKA AH",
@@ -166,6 +209,12 @@ const translations = {
     "task.input-label": "Maxaad jeclaan lahayd inaad qabato?",
     "task.placeholder": "Maxaad jeclaan lahayd inaad qabato?",
     "task.create": "Samee Hawl Cusub",
+    "task.date": "Taariikh",
+    "task.time": "Waqti",
+    "task.priority": "Muhiimad",
+    "priority.low": "Hoose",
+    "priority.medium": "Dhexdhexaad",
+    "priority.high": "Sare",
     "task.filter-label": "Kala shaandhee hawlaha",
     "task.filter-all": "Dhammaan hawlaha",
     "task.filter-active": "Hawlaha sugaya",
@@ -193,6 +242,15 @@ const translations = {
     "progress.summary-started": "Waa hagaag. Sii wad, hal tallaabo markiiba.",
     "progress.summary-start": "Bog cusub ayaad haysataa. Hal shay dooro oo ka bilow.",
     "progress.count": "{completed} ka mid ah {total} hawlood waa la dhammeeyay",
+    "stats.aria": "Tirakoobka hawlaha",
+    "stats.total": "Wadarta hawlaha",
+    "stats.total-caption": "Dhammaan hawlahaaga",
+    "stats.completed": "La dhammeeyay",
+    "stats.completed-caption": "Hawlaha la qabtay",
+    "stats.pending": "Sugaya",
+    "stats.pending-caption": "Hawlaha harsan",
+    "stats.today": "Maanta",
+    "stats.today-caption": "Maanta la dhammeeyay",
     "calendar.eyebrow": "BISHAN",
     "calendar.previous": "Bisha hore",
     "calendar.next": "Bisha xigta",
@@ -233,8 +291,8 @@ const translations = {
     "auth.firebase-auth-not-configured": "Firebase Authentication weli lama hawlgelin. Firebase Console ka fur Authentication oo guji Get started.",
     "auth.loading": "Si ammaan ah ayaa loo xiriirayaa...",
     "auth.ready": "Firebase waa diyaar. Gal ama samee akoon si xogtaadu u wada shaqayso.",
-    "auth.signed-in": "Waxaad ku gashay {email}",
-    "auth.synced": "Waxaad ku gashay {email}. Hawlahaaga waa la waafajinayaa.",
+    "auth.signed-in": "Waad gashay. Akoonkaagu waa diyaar.",
+    "auth.synced": "Waad gashay. Hawlahaaga waa la waafajinayaa.",
     "auth.syncing": "Hawlahaaga si ammaan ah ayaa loo waafajinayaa...",
     "auth.sync-error": "Kaydinta cloud-ka way fashilantay. Hawlaha qalabkan ku kaydsan weli way kuu diyaar yihiin.",
     "auth.network-error": "Xiriir lama helin. Hubi internetka oo mar kale isku day.",
@@ -251,6 +309,30 @@ const translations = {
     "auth.resend": "Dib u dir iimaylka xaqiijinta",
     "auth.check-verification": "Waan xaqiijiyay iimaylkayga",
     "auth.account-created": "Akoonka waa la sameeyay. Xaqiiji iimaylka ka hor kaydinta.",
+    "auth.google": "Ku sii wad Google",
+    "auth.forgot-password": "Ma illowday furaha sirta ah?",
+    "auth.reset-sent": "Iimaylka dib u dejinta furaha waa la diray. Ka eeg iimaylkaaga.",
+    "auth.google-disabled": "Google sign-in lagama hawlgelin Firebase-ka mashruucan.",
+    "profile.eyebrow": "AKOONKAAGA",
+    "profile.title": "Akoon",
+    "profile.description": "Maamul magacaaga iyo faahfaahinta akoontiga.",
+    "profile.email": "Cinwaanka iimaylka",
+    "profile.name": "Magaca muuqda",
+    "profile.name-placeholder": "Magacaaga",
+    "profile.save": "Kaydi xogta",
+    "profile.saving": "Xogta akoonka ayaa la kaydinayaa...",
+    "profile.saved": "Xogta akoonkaaga waa la cusboonaysiiyay.",
+    "profile.save-error": "Xogta akoonka lama cusboonaysiin. Mar kale isku day.",
+    "profile.import-error": "Hawlaha qalabkan lama soo gelin karin.",
+    "profile.sign-in-required": "Gal si aad u maamusho akoonkaaga. Hawlaha qalabkan si gooni ah ayay u jiraan ilaa aad doorato inaad soo geliso.",
+    "profile.import-local": "Hawlaha qalabkan soo geli",
+    "notifications.title": "Xusuusinta hawlaha",
+    "notifications.description": "Daar ogeysiisyada si laguugu xusuusiyo marka hawl la gaaro.",
+    "notifications.enable": "Daar xusuusinta",
+    "notifications.enabled": "Xusuusintu way ka shaqaynaysaa qalabkan.",
+    "notifications.denied": "Ogeysiisyadu waa xanniban yihiin. Ka oggolow dejimaha biraawsarka.",
+    "notifications.unsupported": "Biraawsarkani ma taageero ogeysiisyada hawlaha.",
+    "notifications.task-due": "Xusuusin hawl",
     "auth.signed-out": "Waad ka baxday. Hawlaha qalabkan ku kaydsan ma luminayaan.",
     "install.button": "Ku rakib",
     "install.eyebrow": "HAWLAHAAGA HAL TAABASHO",
@@ -296,17 +378,41 @@ const calendarSelected = document.querySelector("#calendar-selected");
 const notesInput = document.querySelector("#notes-input");
 const notesStatus = document.querySelector("#notes-status");
 const storageStatus = document.querySelector("#storage-status");
+const taskDateInput = document.querySelector("#task-date");
+const taskTimeInput = document.querySelector("#task-time");
+const taskPriorityInput = document.querySelector("#task-priority");
+const dataStats = {
+  total: document.querySelector("#stat-total"),
+  completed: document.querySelector("#stat-completed"),
+  pending: document.querySelector("#stat-pending"),
+  today: document.querySelector("#stat-today")
+};
+const notificationStatus = document.querySelector("#notification-status");
+const notificationEnable = document.querySelector("#notification-enable");
+const profileForm = document.querySelector("#profile-form");
+const profileName = document.querySelector("#profile-name");
+const profileStatus = document.querySelector("#profile-status");
+const profileAuthRequired = document.querySelector("#profile-auth-required");
+const importLocalData = document.querySelector("#import-local-data");
 const themeToggles = document.querySelectorAll(".theme-toggle");
 const languageButtons = document.querySelectorAll("[data-language]");
 
-const today = new Date();
+let today = new Date();
 let calendarDate = new Date(today.getFullYear(), today.getMonth(), 1);
 let selectedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 let language = "en";
 let notesHaveError = false;
 let tasksHaveError = false;
-let signedInEmail = "";
 let signedInVerified = false;
+let dataOwnerUid = "";
+
+function storageKey(key) {
+  return dataOwnerUid ? `${key}:${dataOwnerUid}` : key;
+}
+
+function localDateKey(date = new Date()) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+}
 
 function translate(key, values = {}) {
   return translations[language][key].replace(/\{(\w+)\}/g, (match, name) => values[name] ?? match);
@@ -317,17 +423,24 @@ function getTaskTitle(task) {
   return starterTask ? translate(`starter.${starterTask.id}`) : task.title;
 }
 
+function getStarterTasks() {
+  return starterTasks.map((task) => ({ ...task }));
+}
+
 function loadTasks() {
   try {
-    const savedTasks = localStorage.getItem(STORAGE_KEY);
-    if (savedTasks === null) return starterTasks;
+    const savedTasks = localStorage.getItem(storageKey(STORAGE_KEY));
+    if (savedTasks === null) return dataOwnerUid ? [] : getStarterTasks();
 
     const parsedTasks = JSON.parse(savedTasks);
     if (!Array.isArray(parsedTasks) || !parsedTasks.every((task) =>
       task &&
       (typeof task.id === "number" || typeof task.id === "string") &&
       typeof task.title === "string" &&
-      typeof task.completed === "boolean"
+      typeof task.completed === "boolean" &&
+      (task.date === undefined || /^\d{4}-\d{2}-\d{2}$/.test(task.date)) &&
+      (task.time === undefined || /^\d{2}:\d{2}$/.test(task.time)) &&
+      (task.priority === undefined || ["low", "medium", "high"].includes(task.priority))
     )) {
       throw new Error("Saved tasks have an invalid format.");
     }
@@ -336,7 +449,7 @@ function loadTasks() {
   } catch (error) {
     console.error("Could not load saved tasks:", error);
     tasksHaveError = true;
-    return starterTasks;
+    return dataOwnerUid ? [] : getStarterTasks();
   }
 }
 
@@ -344,7 +457,7 @@ let tasks = loadTasks();
 
 function saveTasks({ broadcast = true } = {}) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    localStorage.setItem(storageKey(STORAGE_KEY), JSON.stringify(tasks));
     tasksHaveError = false;
   } catch (error) {
     console.error("Could not save tasks:", error);
@@ -381,6 +494,19 @@ function updateDate() {
     month: "short",
     day: "numeric"
   }).format(date);
+}
+
+function refreshDailyView() {
+  const nextDay = new Date();
+  if (nextDay.toDateString() === today.toDateString()) return;
+  const previousDay = today;
+  today = nextDay;
+  if (selectedDate.toDateString() === previousDay.toDateString()) {
+    selectedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  }
+  updateDate();
+  renderCalendar();
+  renderTasks();
 }
 
 function renderCalendar() {
@@ -455,7 +581,7 @@ function setTheme(theme) {
 
 function loadLanguage() {
   try {
-    const savedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    const savedLanguage = localStorage.getItem(storageKey(LANGUAGE_STORAGE_KEY));
     return savedLanguage === "en" ? "en" : "so";
   } catch (error) {
     console.error("Could not load language preference:", error);
@@ -484,9 +610,17 @@ function setLanguage(nextLanguage) {
   });
 
   notesStatus.textContent = translate(notesHaveError ? "notes.save-error" : "notes.saved");
-  if (signedInEmail && signedInVerified) {
-    document.querySelectorAll(".account-button [data-i18n]").forEach((label) => {
-      label.textContent = signedInEmail;
+  notificationStatus.textContent = translate(getNotificationStatusKey());
+  notificationEnable.textContent = translate("notifications.enable");
+  if (profileStatus.dataset.statusKey) {
+    profileStatus.textContent = translate(profileStatus.dataset.statusKey);
+  }
+  if (signedInVerified) {
+    document.querySelectorAll("#account-button [data-i18n], #settings-account-button [data-i18n]").forEach((label) => {
+      label.textContent = translate("auth.account-title");
+    });
+    document.querySelectorAll("#account-button, #settings-account-button").forEach((button) => {
+      button.setAttribute("aria-label", translate("auth.account-title"));
     });
   }
   updateStorageStatus();
@@ -499,7 +633,7 @@ function setLanguage(nextLanguage) {
 
 function loadTheme() {
   try {
-    return localStorage.getItem(THEME_STORAGE_KEY) === "dark" ? "dark" : "light";
+    return localStorage.getItem(storageKey(THEME_STORAGE_KEY)) === "dark" ? "dark" : "light";
   } catch (error) {
     console.error("Could not load theme preference:", error);
     return "light";
@@ -509,13 +643,66 @@ function loadTheme() {
 function loadNotes() {
   try {
     notesHaveError = false;
-    return localStorage.getItem(NOTES_STORAGE_KEY) || "";
+    return localStorage.getItem(storageKey(NOTES_STORAGE_KEY)) || "";
   } catch (error) {
     console.error("Could not load notes:", error);
     notesHaveError = true;
     notesStatus.textContent = translate("notes.load-error");
     return "";
   }
+}
+
+function getNotificationStatusKey() {
+  if (!("Notification" in window)) return "notifications.unsupported";
+  if (Notification.permission === "denied") return "notifications.denied";
+  try {
+    if (Notification.permission === "granted" &&
+        localStorage.getItem(storageKey(NOTIFICATIONS_STORAGE_KEY)) === "enabled") {
+      return "notifications.enabled";
+    }
+  } catch (error) {
+    console.error("Could not read reminder preference:", error);
+  }
+  return "notifications.description";
+}
+
+function checkTaskReminders() {
+  if (!("Notification" in window) || Notification.permission !== "granted") return;
+  try {
+    if (localStorage.getItem(storageKey(NOTIFICATIONS_STORAGE_KEY)) !== "enabled") return;
+  } catch (error) {
+    console.error("Could not read reminder preference:", error);
+    return;
+  }
+
+  const now = new Date();
+  const dueTasks = tasks.filter((task) => {
+    if (task.completed || !task.date || !task.time || task.remindedAt) return false;
+    const dueAt = new Date(`${task.date}T${task.time}:00`);
+    return dueAt.getTime() >= now.getTime() - 60_000
+      && dueAt.getTime() <= now.getTime() + 10 * 60_000;
+  });
+  if (!dueTasks.length) return;
+
+  const dueIds = new Set(dueTasks.map((task) => task.id));
+  tasks = tasks.map((task) => dueIds.has(task.id) ? { ...task, remindedAt: now.toISOString() } : task);
+  saveTasks();
+  dueTasks.forEach((task) => {
+    const options = { body: task.title, icon: "./icons/app-icon-192.png", tag: `task-${task.id}` };
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.getRegistration()
+        .then((registration) => registration
+          ? registration.showNotification(translate("notifications.task-due"), options)
+          : new Notification(translate("notifications.task-due"), options))
+        .catch((error) => console.error("Could not display task reminder:", error));
+    } else {
+      try {
+        new Notification(translate("notifications.task-due"), options);
+      } catch (error) {
+        console.error("Could not display task reminder:", error);
+      }
+    }
+  });
 }
 
 function renderTasks() {
@@ -553,7 +740,21 @@ function renderTasks() {
     subtitle.className = "task-subtitle";
     subtitle.textContent = translate(task.completed ? "task.completed" : "task.pending");
 
+    const details = document.createElement("span");
+    details.className = "task-details";
+    const detailParts = [];
+    if (task.date) {
+      const taskDay = new Date(`${task.date}T00:00:00`);
+      detailParts.push(new Intl.DateTimeFormat(language === "so" ? "so-SO" : "en-US", {
+        month: "short", day: "numeric"
+      }).format(taskDay));
+    }
+    if (task.time) detailParts.push(task.time);
+    if (task.priority) detailParts.push(`${translate("task.priority")}: ${translate(`priority.${task.priority}`)}`);
+    details.textContent = detailParts.join(" · ");
+
     copy.append(title, subtitle);
+    if (detailParts.length) copy.append(details);
 
     const actions = document.createElement("div");
     actions.className = "task-actions";
@@ -563,7 +764,7 @@ function renderTasks() {
     editButton.type = "button";
     editButton.textContent = translate("task.edit");
     editButton.setAttribute("aria-label", `${translate("task.edit")}: ${displayTitle}`);
-    editButton.addEventListener("click", () => startTaskEdit(task.id, displayTitle, item));
+    editButton.addEventListener("click", () => startTaskEdit(task, displayTitle, item));
 
     const deleteButton = document.createElement("button");
     deleteButton.className = "delete-task";
@@ -585,7 +786,7 @@ function renderTasks() {
   updateProgress();
 }
 
-function startTaskEdit(id, currentTitle, item) {
+function startTaskEdit(task, currentTitle, item) {
   const form = document.createElement("form");
   form.className = "task-edit-form";
 
@@ -595,6 +796,26 @@ function startTaskEdit(id, currentTitle, item) {
   input.maxLength = 100;
   input.required = true;
   input.setAttribute("aria-label", translate("task.edit-input"));
+
+  const date = document.createElement("input");
+  date.type = "date";
+  date.value = task.date || localDateKey();
+  date.setAttribute("aria-label", translate("task.date"));
+
+  const time = document.createElement("input");
+  time.type = "time";
+  time.value = task.time || "";
+  time.setAttribute("aria-label", translate("task.time"));
+
+  const priority = document.createElement("select");
+  priority.setAttribute("aria-label", translate("task.priority"));
+  ["low", "medium", "high"].forEach((value) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = translate(`priority.${value}`);
+    priority.append(option);
+  });
+  priority.value = task.priority || "medium";
 
   const actions = document.createElement("div");
   actions.className = "task-edit-actions";
@@ -611,7 +832,7 @@ function startTaskEdit(id, currentTitle, item) {
   cancelButton.addEventListener("click", renderTasks);
 
   actions.append(saveButton, cancelButton);
-  form.append(input, actions);
+  form.append(input, date, time, priority, actions);
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const title = input.value.trim();
@@ -620,7 +841,18 @@ function startTaskEdit(id, currentTitle, item) {
       return;
     }
 
-    tasks = tasks.map((task) => task.id === id ? { ...task, title } : task);
+    tasks = tasks.map((item) => {
+      if (item.id !== task.id) return item;
+      const savedTask = { ...item };
+      delete savedTask.remindedAt;
+      return {
+        ...savedTask,
+        title,
+        date: date.value,
+        time: time.value,
+        priority: priority.value
+      };
+    });
     saveTasks();
     renderTasks();
   });
@@ -637,8 +869,14 @@ function updateProgress() {
   const completedTasks = tasks.filter((task) => task.completed).length;
   const totalTasks = tasks.length;
   const percentage = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
+  const todaysTasks = tasks.filter((task) => !task.date || task.date === localDateKey());
+  const todaysCompleted = todaysTasks.filter((task) => task.completed).length;
 
   taskCount.textContent = translate(totalTasks === 1 ? "task.count-one" : "task.count-many", { count: totalTasks });
+  dataStats.total.textContent = String(totalTasks);
+  dataStats.completed.textContent = String(completedTasks);
+  dataStats.pending.textContent = String(totalTasks - completedTasks);
+  dataStats.today.textContent = `${todaysCompleted} / ${todaysTasks.length}`;
   progressPercent.textContent = `${percentage}%`;
   progressCount.textContent = translate("progress.count", {
     completed: completedTasks,
@@ -657,6 +895,7 @@ function updateProgress() {
   } else {
     progressSummary.textContent = translate("progress.summary-start");
   }
+  checkTaskReminders();
 }
 
 function toggleTask(id) {
@@ -682,9 +921,17 @@ taskForm.addEventListener("submit", (event) => {
     return;
   }
 
-  tasks.unshift({ id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`, title, completed: false });
+  tasks.unshift({
+    id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    title,
+    completed: false,
+    date: taskDateInput.value || localDateKey(),
+    time: taskTimeInput.value,
+    priority: taskPriorityInput.value
+  });
   saveTasks();
   taskInput.value = "";
+  taskTimeInput.value = "";
   taskFilter.value = "all";
   renderTasks();
   taskInput.focus();
@@ -703,7 +950,7 @@ languageButtons.forEach((button) => {
     const selectedLanguage = button.dataset.language;
     setLanguage(selectedLanguage);
     try {
-      localStorage.setItem(LANGUAGE_STORAGE_KEY, selectedLanguage);
+      localStorage.setItem(storageKey(LANGUAGE_STORAGE_KEY), selectedLanguage);
     } catch (error) {
       console.error("Could not save language preference:", error);
     }
@@ -721,7 +968,7 @@ document.querySelector("#next-month").addEventListener("click", () => {
 notesInput.value = loadNotes();
 notesInput.addEventListener("input", () => {
   try {
-    localStorage.setItem(NOTES_STORAGE_KEY, notesInput.value);
+    localStorage.setItem(storageKey(NOTES_STORAGE_KEY), notesInput.value);
     notesHaveError = false;
     notesStatus.textContent = translate("notes.saved");
   } catch (error) {
@@ -736,7 +983,7 @@ themeToggles.forEach((button) => {
     const theme = document.body.dataset.theme === "dark" ? "light" : "dark";
     setTheme(theme);
     try {
-      localStorage.setItem(THEME_STORAGE_KEY, theme);
+      localStorage.setItem(storageKey(THEME_STORAGE_KEY), theme);
     } catch (error) {
       console.error("Could not save theme preference:", error);
     }
@@ -744,8 +991,87 @@ themeToggles.forEach((button) => {
   });
 });
 
+notificationEnable.addEventListener("click", async () => {
+  if (!("Notification" in window)) {
+    notificationStatus.textContent = translate("notifications.unsupported");
+    return;
+  }
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      localStorage.setItem(storageKey(NOTIFICATIONS_STORAGE_KEY), "enabled");
+      notificationStatus.textContent = translate("notifications.enabled");
+      checkTaskReminders();
+    } else {
+      notificationStatus.textContent = translate(permission === "denied"
+        ? "notifications.denied"
+        : "notifications.description");
+    }
+  } catch (error) {
+    console.error("Could not enable task reminders:", error);
+    notificationStatus.textContent = translate("notifications.unsupported");
+  }
+});
+
+profileForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  profileStatus.dataset.statusKey = "profile.saving";
+  profileStatus.textContent = translate("profile.saving");
+  profileForm.querySelector('button[type="submit"]').disabled = true;
+  window.dispatchEvent(new CustomEvent("mydaily:update-profile", {
+    detail: { displayName: profileName.value.trim() }
+  }));
+});
+
+importLocalData.addEventListener("click", () => {
+  if (!dataOwnerUid) return;
+  try {
+    const alreadyImported = localStorage.getItem(`${IMPORT_STORAGE_KEY}:${dataOwnerUid}`) === "true";
+    if (alreadyImported) {
+      importLocalData.hidden = true;
+      return;
+    }
+
+    const localTasksValue = localStorage.getItem(STORAGE_KEY);
+    const importedTasks = localTasksValue ? JSON.parse(localTasksValue) : [];
+    if (!Array.isArray(importedTasks) || !importedTasks.every((task) =>
+      task &&
+      (typeof task.id === "number" || typeof task.id === "string") &&
+      typeof task.title === "string" &&
+      typeof task.completed === "boolean" &&
+      (task.date === undefined || /^\d{4}-\d{2}-\d{2}$/.test(task.date)) &&
+      (task.time === undefined || /^\d{2}:\d{2}$/.test(task.time)) &&
+      (task.priority === undefined || ["low", "medium", "high"].includes(task.priority))
+    )) {
+      throw new Error("On-device tasks have an invalid format.");
+    }
+    const imported = importedTasks.map((task, index) => ({
+      ...task,
+      id: `device-${Date.now()}-${index}`
+    }));
+    if (!notesInput.value) {
+      notesInput.value = localStorage.getItem(NOTES_STORAGE_KEY) || "";
+      localStorage.setItem(storageKey(NOTES_STORAGE_KEY), notesInput.value);
+    }
+    localStorage.setItem(`${IMPORT_STORAGE_KEY}:${dataOwnerUid}`, "true");
+    tasks = [...imported, ...tasks];
+    importLocalData.hidden = true;
+    saveTasks();
+    renderTasks();
+  } catch (error) {
+    console.error("Could not import on-device planner data:", error);
+    profileStatus.dataset.statusKey = "profile.import-error";
+    profileStatus.textContent = translate("profile.import-error");
+  }
+});
+
+taskDateInput.value = localDateKey();
+notificationStatus.textContent = translate(getNotificationStatusKey());
 setLanguage(loadLanguage());
 notesInput.value = loadNotes();
+window.setInterval(checkTaskReminders, 30_000);
+window.setInterval(refreshDailyView, 60_000);
+document.addEventListener("visibilitychange", checkTaskReminders);
 window.addEventListener("mydaily:remote-data", (event) => {
   const { tasks: remoteTasks, notes, language: remoteLanguage, theme: remoteTheme } = event.detail;
   let shouldRenderTasks = false;
@@ -756,7 +1082,7 @@ window.addEventListener("mydaily:remote-data", (event) => {
   }
   if (remoteLanguage === "en" || remoteLanguage === "so") {
     try {
-      localStorage.setItem(LANGUAGE_STORAGE_KEY, remoteLanguage);
+      localStorage.setItem(storageKey(LANGUAGE_STORAGE_KEY), remoteLanguage);
     } catch (error) {
       console.error("Could not save synced language preference locally:", error);
     }
@@ -767,7 +1093,7 @@ window.addEventListener("mydaily:remote-data", (event) => {
   }
   if (remoteTheme === "light" || remoteTheme === "dark") {
     try {
-      localStorage.setItem(THEME_STORAGE_KEY, remoteTheme);
+      localStorage.setItem(storageKey(THEME_STORAGE_KEY), remoteTheme);
     } catch (error) {
       console.error("Could not save synced theme preference locally:", error);
     }
@@ -776,7 +1102,7 @@ window.addEventListener("mydaily:remote-data", (event) => {
   if (typeof notes === "string") {
     notesInput.value = notes;
     try {
-      localStorage.setItem(NOTES_STORAGE_KEY, notes);
+      localStorage.setItem(storageKey(NOTES_STORAGE_KEY), notes);
       notesHaveError = false;
       notesStatus.textContent = translate("notes.saved");
     } catch (error) {
@@ -788,22 +1114,58 @@ window.addEventListener("mydaily:remote-data", (event) => {
   if (shouldRenderTasks) renderTasks();
 });
 window.addEventListener("mydaily:auth-state", (event) => {
-  const { email, verified, statusKey } = event.detail;
-  signedInEmail = email || "";
+  const { verified, statusKey, uid } = event.detail;
+  const nextOwnerUid = verified ? uid || "" : "";
+  if (nextOwnerUid !== dataOwnerUid) {
+    dataOwnerUid = nextOwnerUid;
+    profileStatus.dataset.statusKey = "";
+    profileStatus.textContent = "";
+    profileForm.querySelector('button[type="submit"]').disabled = false;
+    tasks = loadTasks();
+    notesInput.value = loadNotes();
+    setLanguage(loadLanguage());
+    setTheme(loadTheme());
+    renderTasks();
+  }
   signedInVerified = Boolean(verified);
-  const accountButtons = document.querySelectorAll(".account-button");
+  profileForm.hidden = !signedInVerified;
+  profileAuthRequired.hidden = signedInVerified;
+  importLocalData.hidden = !signedInVerified;
+  if (signedInVerified) {
+    try {
+      importLocalData.hidden = localStorage.getItem(`${IMPORT_STORAGE_KEY}:${dataOwnerUid}`) === "true"
+        || localStorage.getItem(STORAGE_KEY) === null;
+    } catch (error) {
+      console.error("Could not read the device import status:", error);
+      importLocalData.hidden = true;
+    }
+  }
+  profileName.value = "";
+  const accountButtons = document.querySelectorAll("#account-button, #settings-account-button");
   const accountStatus = document.querySelector("#account-status");
   accountButtons.forEach((button) => {
-    button.dataset.signedIn = String(Boolean(email && verified));
-    button.setAttribute("aria-label", email && verified ? email : translate("auth.sign-in"));
+    button.dataset.signedIn = String(Boolean(verified));
+    button.setAttribute("aria-label", translate(verified ? "auth.account-title" : "auth.sign-in"));
     const label = button.querySelector("[data-i18n]");
-    if (label) label.textContent = email && verified ? email : translate("auth.sign-in");
+    if (label) label.textContent = translate(verified ? "auth.account-title" : "auth.sign-in");
   });
-  accountStatus.textContent = translate(statusKey || "auth.local-mode", { email: email || "" });
+  accountStatus.textContent = translate(statusKey || "auth.local-mode");
+});
+window.addEventListener("mydaily:profile-updated", () => {
+  profileName.value = "";
+  profileStatus.dataset.statusKey = "profile.saved";
+  profileStatus.textContent = translate("profile.saved");
+});
+window.addEventListener("mydaily:profile-error", () => {
+  profileStatus.dataset.statusKey = "profile.save-error";
+  profileStatus.textContent = translate("profile.save-error");
+});
+window.addEventListener("mydaily:profile-save-finished", () => {
+  profileForm.querySelector('button[type="submit"]').disabled = false;
 });
 window.addEventListener("mydaily:cloud-status", (event) => {
-  const { statusKey, email } = event.detail;
-  document.querySelector("#account-status").textContent = translate(statusKey, { email: email || "" });
+  const { statusKey } = event.detail;
+  document.querySelector("#account-status").textContent = translate(statusKey);
   updateStorageStatus();
 });
 window.addEventListener("mydaily:auth-error", (event) => {

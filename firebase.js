@@ -9,9 +9,10 @@ const authModeToggle = document.querySelector("#auth-mode-toggle");
 const authLogout = document.querySelector("#auth-logout");
 const authResend = document.querySelector("#auth-resend-verification");
 const authCheckVerification = document.querySelector("#auth-check-verification");
+const authForgotPassword = document.querySelector("#auth-forgot-password");
+const googleSignIn = document.querySelector("#google-sign-in");
 const authStatus = document.querySelector("#auth-status");
-const authUser = document.querySelector("#auth-user");
-const accountButtons = document.querySelectorAll(".account-button");
+const accountButtons = document.querySelectorAll("#account-button, #settings-account-button");
 const installDialog = document.querySelector("#install-dialog");
 const installButton = document.querySelector("#install-button");
 const installConfirm = document.querySelector("#install-confirm");
@@ -47,6 +48,7 @@ let localData = { tasks: [], notes: "", language: "so", theme: "light" };
 let pendingLocalChanges = false;
 let deferredInstallPrompt = null;
 let currentLanguage = document.documentElement.lang === "so" ? "so" : "en";
+let firebaseUnavailableKey = "auth.loading";
 
 function emit(name, detail) {
   window.dispatchEvent(new CustomEvent(name, { detail }));
@@ -58,8 +60,8 @@ function setAuthStatus(statusKey) {
   emit("mydaily:auth-error", { statusKey });
 }
 
-function setCloudStatus(statusKey, email = "") {
-  emit("mydaily:cloud-status", { statusKey, email });
+function setCloudStatus(statusKey) {
+  emit("mydaily:cloud-status", { statusKey });
 }
 
 function renderAuthMode() {
@@ -72,18 +74,18 @@ function renderAuthMode() {
   authModeToggle.dataset.i18n = isSigningUp ? "auth.switch-to-sign-in" : "auth.create-account";
   authPassword.autocomplete = isSigningUp ? "new-password" : "current-password";
   authForm.hidden = Boolean(currentUser?.emailVerified);
+  googleSignIn.hidden = Boolean(currentUser);
+  authForgotPassword.hidden = Boolean(currentUser) || isSigningUp;
   authModeToggle.hidden = Boolean(currentUser);
   authLogout.hidden = !currentUser;
   authResend.hidden = !currentUser || currentUser.emailVerified;
   authCheckVerification.hidden = !currentUser || currentUser.emailVerified;
-  authUser.hidden = !currentUser;
-  authUser.textContent = currentUser ? currentUser.email : "";
 }
 
 function showAuthDialog() {
   if (!authDialog.open) authDialog.showModal();
   renderAuthMode();
-  if (!firebaseConfig.apiKey) setAuthStatus("auth.not-configured");
+  if (!firebaseAuth) setAuthStatus(firebaseUnavailableKey);
 }
 
 function normalizeTasks(value) {
@@ -92,15 +94,12 @@ function normalizeTasks(value) {
     task &&
     (typeof task.id === "number" || typeof task.id === "string") &&
     typeof task.title === "string" &&
-    typeof task.completed === "boolean"
+    typeof task.completed === "boolean" &&
+    (task.date === undefined || (typeof task.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(task.date))) &&
+    (task.time === undefined || (typeof task.time === "string" && /^\d{2}:\d{2}$/.test(task.time))) &&
+    (task.priority === undefined || ["low", "medium", "high"].includes(task.priority)) &&
+    (task.remindedAt === undefined || typeof task.remindedAt === "string")
   );
-}
-
-function mergeTasks(remoteTasks, localTasks) {
-  const merged = new Map();
-  normalizeTasks(remoteTasks).forEach((task) => merged.set(String(task.id), task));
-  normalizeTasks(localTasks).forEach((task) => merged.set(String(task.id), task));
-  return [...merged.values()];
 }
 
 function queueCloudSave() {
@@ -108,6 +107,7 @@ function queueCloudSave() {
   pendingLocalChanges = true;
   clearTimeout(saveTimer);
   const user = currentUser;
+  setCloudStatus("auth.syncing");
   saveTimer = setTimeout(() => {
     if (currentUser?.uid !== user.uid) return;
     const dataToSave = { ...localData };
@@ -121,11 +121,11 @@ function queueCloudSave() {
     }).then(() => {
       if (currentUser?.uid === user.uid) {
         pendingLocalChanges = false;
-        setCloudStatus("auth.synced", user.email);
+        setCloudStatus("auth.synced");
       }
     }).catch((error) => {
       console.error("Could not sync planner data to Firestore:", error);
-      if (currentUser?.uid === user.uid) setCloudStatus("auth.sync-error", user.email);
+      if (currentUser?.uid === user.uid) setCloudStatus("auth.sync-error");
     });
   }, 350);
 }
@@ -133,10 +133,11 @@ function queueCloudSave() {
 function watchAccountData(user) {
   if (stopWatchingAccountData) stopWatchingAccountData();
   currentUser = user;
-  localData = loadLocalData();
+  localData = loadLocalData(user.uid);
   pendingLocalChanges = false;
   renderAuthMode();
-  setCloudStatus("auth.syncing", user.email);
+  setCloudStatus("auth.syncing");
+  emit("mydaily:remote-data", localData);
 
   const dataRef = firestoreApi.doc(firestoreDb, "users", user.uid, "appData", "main");
   let firstSnapshot = true;
@@ -145,44 +146,27 @@ function watchAccountData(user) {
     if (firstSnapshot) {
       firstSnapshot = false;
       if (remoteData) {
-        const mergedTasks = mergeTasks(remoteData.tasks, localData.tasks);
-        const mergedNotes = remoteData.notes || localData.notes;
-        const mergedLanguage = remoteData.language === "en" || remoteData.language === "so"
-          ? remoteData.language
-          : localData.language;
-        const mergedTheme = remoteData.theme === "dark" || remoteData.theme === "light"
-          ? remoteData.theme
-          : localData.theme;
-        const changed = JSON.stringify(mergedTasks) !== JSON.stringify(normalizeTasks(remoteData.tasks))
-          || mergedNotes !== (remoteData.notes || "")
-          || mergedLanguage !== remoteData.language
-          || mergedTheme !== remoteData.theme;
-        localData = { tasks: mergedTasks, notes: mergedNotes, language: mergedLanguage, theme: mergedTheme };
+        localData = {
+          tasks: normalizeTasks(remoteData.tasks),
+          notes: typeof remoteData.notes === "string" ? remoteData.notes : "",
+          language: remoteData.language === "en" || remoteData.language === "so"
+            ? remoteData.language
+            : localData.language,
+          theme: remoteData.theme === "dark" || remoteData.theme === "light"
+            ? remoteData.theme
+            : localData.theme
+        };
         emit("mydaily:remote-data", localData);
-        if (changed) queueCloudSave();
+        setCloudStatus("auth.synced");
       } else {
         queueCloudSave();
       }
-      setCloudStatus("auth.synced", user.email);
       return;
     }
 
     if (!remoteData) return;
     const remoteTasks = normalizeTasks(remoteData.tasks);
-    if (pendingLocalChanges) {
-      const mergedTasks = mergeTasks(remoteTasks, localData.tasks);
-      const mergedNotes = localData.notes || remoteData.notes || "";
-      const mergedLanguage = localData.language || remoteData.language || "so";
-      const mergedTheme = localData.theme || remoteData.theme || "light";
-      const changed = JSON.stringify(mergedTasks) !== JSON.stringify(remoteTasks)
-        || mergedNotes !== (remoteData.notes || "")
-        || mergedLanguage !== remoteData.language
-        || mergedTheme !== remoteData.theme;
-      localData = { tasks: mergedTasks, notes: mergedNotes, language: mergedLanguage, theme: mergedTheme };
-      emit("mydaily:remote-data", localData);
-      if (changed) queueCloudSave();
-      return;
-    }
+    if (pendingLocalChanges) return;
 
     localData = {
       tasks: remoteTasks,
@@ -195,30 +179,31 @@ function watchAccountData(user) {
         : localData.theme
     };
     emit("mydaily:remote-data", localData);
-    setCloudStatus("auth.synced", user.email);
+    setCloudStatus("auth.synced");
   }, (error) => {
     console.error("Could not read planner data from Firestore:", error);
-    setCloudStatus("auth.sync-error", user.email);
+    setCloudStatus("auth.sync-error");
   });
 }
 
-function loadLocalData() {
+function loadLocalData(userId = "") {
   const defaultTasks = [
     { id: 1, title: "Take a few minutes to plan the day", completed: true },
     { id: 2, title: "Make time for a little movement", completed: false },
     { id: 3, title: "Focus on one important thing", completed: false }
   ];
   try {
-    const savedTasks = localStorage.getItem("my-daily-tasks");
+    const suffix = userId ? `:${userId}` : "";
+    const savedTasks = localStorage.getItem(`my-daily-tasks${suffix}`);
     return {
-      tasks: savedTasks === null ? defaultTasks : normalizeTasks(JSON.parse(savedTasks)),
-      notes: localStorage.getItem("my-daily-notes") || "",
-      language: localStorage.getItem("my-daily-language") === "en" ? "en" : "so",
-      theme: localStorage.getItem("my-daily-theme") === "dark" ? "dark" : "light"
+      tasks: savedTasks === null ? (userId ? [] : defaultTasks) : normalizeTasks(JSON.parse(savedTasks)),
+      notes: localStorage.getItem(`my-daily-notes${suffix}`) || "",
+      language: localStorage.getItem(`my-daily-language${suffix}`) === "en" ? "en" : "so",
+      theme: localStorage.getItem(`my-daily-theme${suffix}`) === "dark" ? "dark" : "light"
     };
   } catch (error) {
     console.error("Could not read local planner data before syncing:", error);
-    return { tasks: defaultTasks, notes: "", language: "so", theme: "light" };
+    return { tasks: userId ? [] : defaultTasks, notes: "", language: "so", theme: "light" };
   }
 }
 
@@ -242,13 +227,16 @@ function authErrorKey(error) {
     "auth/user-not-found": "auth.invalid-credentials",
     "auth/wrong-password": "auth.invalid-credentials",
     "auth/network-request-failed": "auth.network-error",
-    "auth/too-many-requests": "auth.error-generic"
+    "auth/too-many-requests": "auth.error-generic",
+    "auth/popup-blocked": "auth.error-generic",
+    "auth/popup-closed-by-user": "auth.error-generic"
   };
   return errorKeys[error.code] || "auth.error-generic";
 }
 
 async function configureFirebase() {
   if (!firebaseConfig.apiKey || !firebaseConfig.authDomain || !firebaseConfig.projectId || !firebaseConfig.appId) {
+    firebaseUnavailableKey = "auth.not-configured";
     emit("mydaily:cloud-status", { statusKey: "auth.not-configured", email: "" });
     return;
   }
@@ -271,10 +259,12 @@ async function configureFirebase() {
         stopWatchingAccountData();
         stopWatchingAccountData = null;
       }
+      clearTimeout(saveTimer);
+      pendingLocalChanges = false;
       currentUser = user;
       renderAuthMode();
       emit("mydaily:auth-state", {
-        email: user?.email || "",
+        uid: user?.emailVerified ? user.uid : "",
         verified: Boolean(user?.emailVerified),
         statusKey: user ? (user.emailVerified ? "auth.signed-in" : "auth.verify-required") : "auth.local-mode"
       });
@@ -284,16 +274,20 @@ async function configureFirebase() {
         return;
       }
       if (!user.emailVerified) {
-        setCloudStatus("auth.verify-required", user.email);
+        setCloudStatus("auth.verify-required");
         return;
       }
 
       watchAccountData(user);
     });
     setCloudStatus("auth.ready");
+    firebaseUnavailableKey = "auth.not-configured";
   } catch (error) {
     console.error("Firebase could not be initialized:", error);
-    setCloudStatus(error.code === "auth/network-request-failed" ? "auth.network-error" : "auth.error-generic");
+    firebaseUnavailableKey = error.code === "auth/network-request-failed" || error instanceof TypeError
+      ? "auth.network-error"
+      : authErrorKey(error);
+    setCloudStatus(firebaseUnavailableKey);
   }
 }
 
@@ -309,7 +303,7 @@ authModeToggle.addEventListener("click", () => {
 authForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   if (!firebaseAuth) {
-    setAuthStatus("auth.not-configured");
+    setAuthStatus(firebaseUnavailableKey);
     return;
   }
 
@@ -338,6 +332,66 @@ authForm.addEventListener("submit", async (event) => {
   }
 });
 
+googleSignIn.addEventListener("click", async () => {
+  if (!firebaseAuth) {
+    setAuthStatus(firebaseUnavailableKey);
+    return;
+  }
+  googleSignIn.disabled = true;
+  try {
+    const provider = new firebaseAuthApi.GoogleAuthProvider();
+    await firebaseAuthApi.signInWithPopup(firebaseAuth, provider);
+    authDialog.close();
+  } catch (error) {
+    console.error("Google sign-in failed:", error);
+    setAuthStatus(error.code === "auth/operation-not-allowed"
+      ? "auth.google-disabled"
+      : authErrorKey(error));
+  } finally {
+    googleSignIn.disabled = false;
+  }
+});
+
+authForgotPassword.addEventListener("click", async () => {
+  if (!firebaseAuth) {
+    setAuthStatus(firebaseUnavailableKey);
+    return;
+  }
+  if (!authEmail.value.trim() || !authEmail.checkValidity()) {
+    authEmail.reportValidity();
+    return;
+  }
+  authForgotPassword.disabled = true;
+  try {
+    await firebaseAuthApi.sendPasswordResetEmail(firebaseAuth, authEmail.value.trim());
+    setAuthStatus("auth.reset-sent");
+  } catch (error) {
+    console.error("Could not send password reset email:", error);
+    setAuthStatus(authErrorKey(error));
+  } finally {
+    authForgotPassword.disabled = false;
+  }
+});
+
+window.addEventListener("mydaily:update-profile", async (event) => {
+  if (!firebaseAuth?.currentUser?.emailVerified) {
+    emit("mydaily:profile-error", {});
+    emit("mydaily:profile-save-finished", {});
+    return;
+  }
+  try {
+    await firebaseAuthApi.updateProfile(firebaseAuth.currentUser, {
+      displayName: event.detail.displayName
+    });
+    emit("mydaily:profile-updated", {});
+  } catch (error) {
+    console.error("Could not update the account profile:", error);
+    emit("mydaily:profile-error", {});
+  } finally {
+    emit("mydaily:profile-save-finished", {});
+  }
+});
+
 authResend.addEventListener("click", async () => {
   if (!currentUser) return;
   try {
@@ -358,7 +412,7 @@ authCheckVerification.addEventListener("click", async () => {
     renderAuthMode();
     if (currentUser?.emailVerified) {
       emit("mydaily:auth-state", {
-        email: currentUser.email || "",
+        uid: currentUser.uid,
         verified: true,
         statusKey: "auth.signed-in"
       });

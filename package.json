@@ -7,9 +7,13 @@
     "build:web": "node scripts/copy-web.mjs",
     "ios:add": "npm run build:web && cap add ios",
     "ios:sync": "npm run build:web && cap sync ios",
-    "ios:open": "cap open ios"
+    "ios:open": "cap open ios",
+    "android:add": "npm run build:web && cap add android",
+    "android:sync": "npm run build:web && cap sync android",
+    "android:open": "cap open android"
   },
   "dependencies": {
+    "@capacitor/android": "^8.6.2",
     "@capacitor/core": "^8.6.2",
     "@capacitor/ios": "^8.6.2"
   },

@@ -12,10 +12,10 @@
   <link rel="icon" href="icons/app-icon.svg" type="image/svg+xml">
   <link rel="icon" href="icons/app-icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="icons/app-icon-180.png">
-  <title>My Daily Tasks – Daily Productivity App</title>
-  <link rel="stylesheet" href="style.css?v=platform-upgrade-2">
-  <script src="script.js?v=platform-upgrade-4" defer></script>
-  <script type="module" src="firebase.js?v=platform-upgrade-4"></script>
+  <title>My Daily Tasks</title>
+  <link rel="stylesheet" href="style.css?v=platform-upgrade-5">
+  <script src="script.js?v=profile-privacy-1" defer></script>
+  <script type="module" src="firebase.js?v=profile-privacy-1"></script>
 </head>
 <body>
   <div class="app-shell">
@@ -58,6 +58,10 @@
         <a class="nav-link settings-nav" href="#settings">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a1.7 1.7 0 0 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 1 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9H4a1.7 1.7 0 0 1 0-3.4h.2a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a1.7 1.7 0 1 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2V2a1.7 1.7 0 0 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l.1-.1a1.7 1.7 0 1 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a1.7 1.7 0 0 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9Z"/></svg>
           <span data-i18n="nav.settings">Settings</span>
+        </a>
+        <a class="nav-link profile-nav" href="#profile">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>
+          <span data-i18n="nav.profile">Profile</span>
         </a>
       </nav>
 
@@ -129,6 +133,13 @@
           <div class="welcome-decoration" aria-hidden="true"></div>
         </section>
 
+        <section class="stats-grid" aria-label="Task statistics" data-i18n-aria-label="stats.aria">
+          <article class="stat-card"><span data-i18n="stats.total">Total tasks</span><strong id="stat-total">0</strong><small data-i18n="stats.total-caption">Across your planner</small></article>
+          <article class="stat-card"><span data-i18n="stats.completed">Completed</span><strong id="stat-completed">0</strong><small data-i18n="stats.completed-caption">Tasks finished</small></article>
+          <article class="stat-card"><span data-i18n="stats.pending">Pending</span><strong id="stat-pending">0</strong><small data-i18n="stats.pending-caption">Still to do</small></article>
+          <article class="stat-card"><span data-i18n="stats.today">Today</span><strong id="stat-today">0 / 0</strong><small data-i18n="stats.today-caption">Completed today</small></article>
+        </section>
+
         <section class="dashboard" id="planner" aria-label="Daily planner" data-i18n-aria-label="planner.aria">
           <div class="goals-column" id="goals">
             <div class="section-heading">
@@ -140,10 +151,23 @@
             </div>
 
             <form class="add-task-form" id="add-task">
-              <label class="sr-only" for="task-input" data-i18n="task.input-label">What would you like to get done?</label>
-              <span class="input-plus" aria-hidden="true">+</span>
-              <input id="task-input" name="task" type="text" maxlength="100" placeholder="What would you like to get done?" data-i18n-placeholder="task.placeholder" autocomplete="off" required>
-              <button type="submit"><span data-i18n="task.create">Create New Task</span> <span aria-hidden="true">↗</span></button>
+              <div class="task-input-row">
+                <label class="sr-only" for="task-input" data-i18n="task.input-label">What would you like to get done?</label>
+                <span class="input-plus" aria-hidden="true">+</span>
+                <input id="task-input" name="task" type="text" maxlength="100" placeholder="What would you like to get done?" data-i18n-placeholder="task.placeholder" autocomplete="off" required>
+                <button type="submit"><span data-i18n="task.create">Create New Task</span> <span aria-hidden="true">↗</span></button>
+              </div>
+              <div class="task-options">
+                <label><span data-i18n="task.date">Date</span><input id="task-date" name="date" type="date" required></label>
+                <label><span data-i18n="task.time">Time</span><input id="task-time" name="time" type="time"></label>
+                <label><span data-i18n="task.priority">Priority</span>
+                  <select id="task-priority" name="priority">
+                    <option value="medium" data-i18n="priority.medium">Medium</option>
+                    <option value="high" data-i18n="priority.high">High</option>
+                    <option value="low" data-i18n="priority.low">Low</option>
+                  </select>
+                </label>
+              </div>
             </form>
 
             <div class="task-toolbar">
@@ -270,7 +294,34 @@
                 <span data-i18n="auth.sign-in">Sign in</span>
               </button>
             </section>
+            <section class="setting-card notification-setting" aria-labelledby="settings-notification-title">
+              <span class="account-setting-icon" aria-hidden="true">◷</span>
+              <div class="setting-card-copy">
+                <h3 id="settings-notification-title" data-i18n="notifications.title">Task reminders</h3>
+                <p id="notification-status" aria-live="polite" data-i18n="notifications.description">Enable notifications to be reminded when a task is due.</p>
+              </div>
+              <button class="notification-button" id="notification-enable" type="button" data-i18n="notifications.enable">Enable reminders</button>
+            </section>
           </div>
+        </section>
+
+        <section class="settings-section profile-section" id="profile" aria-labelledby="profile-title">
+          <div class="settings-heading">
+            <div>
+              <span class="eyebrow section-eyebrow" data-i18n="profile.eyebrow">YOUR ACCOUNT</span>
+              <h2 id="profile-title" data-i18n="profile.title">Profile</h2>
+              <p data-i18n="profile.description">Manage your name and account details.</p>
+            </div>
+            <span class="settings-heading-icon" aria-hidden="true">♙</span>
+          </div>
+          <p id="profile-auth-required" data-i18n="profile.sign-in-required">Sign in to manage your profile. Your on-device tasks stay separate until you choose to import them.</p>
+          <button class="account-button" id="import-local-data" type="button" data-i18n="profile.import-local" hidden>Import tasks from this device</button>
+          <form id="profile-form" class="profile-form">
+            <label for="profile-name" data-i18n="profile.name">Display name</label>
+            <input id="profile-name" type="text" maxlength="80" autocomplete="name" data-i18n-placeholder="profile.name-placeholder" placeholder="Your name">
+            <button type="submit" class="auth-submit" data-i18n="profile.save">Save profile</button>
+            <p id="profile-status" class="dialog-status" role="status" aria-live="polite"></p>
+          </form>
         </section>
 
         <section class="about-section" id="about" aria-labelledby="about-title">
@@ -299,7 +350,6 @@
     <span class="eyebrow section-eyebrow" data-i18n="auth.eyebrow">YOUR PERSONAL ACCOUNT</span>
     <h2 id="auth-dialog-title" data-i18n="auth.title">Save your plans across devices</h2>
     <p class="dialog-description" data-i18n="auth.description">Create a secure account or sign in to sync your tasks and notes.</p>
-    <p class="dialog-user" id="auth-user" hidden></p>
     <form class="auth-form" id="auth-form">
       <label for="auth-email" data-i18n="auth.email">Email address</label>
       <input id="auth-email" name="email" type="email" autocomplete="email" maxlength="254" required>
@@ -307,8 +357,10 @@
       <input id="auth-password" name="password" type="password" autocomplete="current-password" minlength="8" required>
       <button class="auth-submit" id="auth-submit" type="submit" data-i18n="auth.sign-in">Sign in</button>
     </form>
+    <button class="google-sign-in" id="google-sign-in" type="button"><span aria-hidden="true">G</span><span data-i18n="auth.google">Continue with Google</span></button>
     <div class="auth-actions">
       <button class="dialog-text-button" id="auth-mode-toggle" type="button" data-i18n="auth.create-account">Create an account</button>
+      <button class="dialog-text-button" id="auth-forgot-password" type="button" data-i18n="auth.forgot-password">Forgot password?</button>
       <button class="dialog-text-button" id="auth-logout" type="button" data-i18n="auth.sign-out" hidden>Sign out</button>
       <button class="dialog-text-button" id="auth-resend-verification" type="button" data-i18n="auth.resend" hidden>Resend verification email</button>
       <button class="dialog-text-button" id="auth-check-verification" type="button" data-i18n="auth.check-verification" hidden>I've verified my email</button>

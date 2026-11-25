@@ -28,9 +28,23 @@ service-account JSON file or private key to this repository. Firestore access
 is protected by the rules, not by hiding the web API key.
 
 Account creation sends an email verification link. Users can sync only after
-verifying their email. Existing local tasks are merged with account tasks at
-first sign-in; local tasks are kept, and a non-empty account note takes
-precedence over a local note.
+verifying their email. Email/password and Google sign-in are supported. Enable
+both providers in Firebase Authentication and add every deployed domain to the
+authorized domains list. Google sign-in uses a browser popup and may require a
+native OAuth plugin before it can be used inside a Capacitor WebView.
+
+Each account has a separate local cache and Firestore document. Tasks saved on
+this device are not automatically copied into a newly signed-in account; use
+**Profile → Import tasks from this device** to explicitly import them. This
+avoids exposing one person's local tasks to another account on a shared device.
+Firestore rules allow only the verified account owner to read and write their
+own planner document.
+
+Task reminders use the browser Notification API and fire up to ten minutes
+before a task while the app is open. Grant notification permission from Settings.
+Reliable background/push delivery while the app is closed requires a push
+notification service and server-side scheduling, which are not configured in
+this project.
 
 ## Install on phones and tablets
 
@@ -41,14 +55,15 @@ the app shell for offline use; Firebase account features require a connection.
 
 ## iOS App Store
 
-The PWA can be installed from Safari without the App Store. A future App Store
-release uses the included Capacitor wrapper configuration. To generate or
-refresh the iOS project, run `npm install`, then `npm run ios:add` the first
-time or `npm run ios:sync` after web changes. The generated `ios/` project can
-be opened with `npm run ios:open` on macOS with Xcode installed.
+The PWA can be installed from Safari without the App Store. Capacitor iOS and
+Android wrappers use the existing project configuration. Run `npm run ios:sync`
+or `npm run android:sync` after web changes; the corresponding `*:add` command
+is only needed the first time for a platform. Open the projects with
+`npm run ios:open` (macOS with Xcode) or `npm run android:open` (Android Studio).
+Apple signing/builds require macOS and Xcode; Android release builds require
+Android Studio/SDK and signing configuration.
 
-Before submitting, configure Firebase, test sign-in and email verification on
-physical devices, set the final iOS bundle identifier and app icons, provide
-Apple's required privacy disclosures, and complete signing and App Store
-review. Building and signing the iOS app require macOS and Xcode; GitHub Pages
-continues to serve the regular web/PWA version.
+Before submitting, configure Firebase, publish the Firestore rules, test sign-in
+and email verification on physical devices, set final bundle identifiers and
+app icons, provide store privacy disclosures, and complete signing and store
+review. GitHub Pages continues to serve the regular web/PWA version.
