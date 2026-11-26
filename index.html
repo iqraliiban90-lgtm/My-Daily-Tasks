@@ -14,8 +14,8 @@
   <link rel="apple-touch-icon" href="icons/app-icon-180.png">
   <title>My Daily Tasks</title>
   <link rel="stylesheet" href="style.css?v=platform-upgrade-5">
-  <script src="script.js?v=profile-privacy-1" defer></script>
-  <script type="module" src="firebase.js?v=profile-privacy-1"></script>
+  <script src="script.js?v=auth-validation-3" defer></script>
+  <script type="module" src="firebase.js?v=auth-validation-3"></script>
 </head>
 <body>
   <div class="app-shell">
@@ -352,9 +352,9 @@
     <p class="dialog-description" data-i18n="auth.description">Create a secure account or sign in to sync your tasks and notes.</p>
     <form class="auth-form" id="auth-form">
       <label for="auth-email" data-i18n="auth.email">Email address</label>
-      <input id="auth-email" name="email" type="email" autocomplete="email" maxlength="254" required>
-      <label for="auth-password" data-i18n="auth.password">Password (at least 8 characters)</label>
-      <input id="auth-password" name="password" type="password" autocomplete="current-password" minlength="8" required>
+      <input id="auth-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="254" required>
+      <label for="auth-password" data-i18n="auth.password">Password</label>
+      <input id="auth-password" name="password" type="password" autocomplete="current-password" required>
       <button class="auth-submit" id="auth-submit" type="submit" data-i18n="auth.sign-in">Sign in</button>
     </form>
     <button class="google-sign-in" id="google-sign-in" type="button"><span aria-hidden="true">G</span><span data-i18n="auth.google">Continue with Google</span></button>

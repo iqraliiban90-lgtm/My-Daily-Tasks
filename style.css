@@ -2828,6 +2828,14 @@ body[data-theme="dark"] .google-sign-in {
   line-height: 1.6;
 }
 
+.dialog-status[data-status-key="auth.account-created"],
+.dialog-status[data-status-key="auth.reset-sent"],
+.dialog-status[data-status-key="auth.signed-in"],
+.dialog-status[data-status-key="auth.signed-out"],
+.dialog-status[data-status-key="auth.verify-sent"] {
+  color: #287452;
+}
+
 .dialog-footnote {
   margin: 7px 0 0;
   font-size: 10px;

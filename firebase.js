@@ -4,6 +4,7 @@ const authDialog = document.querySelector("#auth-dialog");
 const authForm = document.querySelector("#auth-form");
 const authEmail = document.querySelector("#auth-email");
 const authPassword = document.querySelector("#auth-password");
+const authPasswordLabel = document.querySelector('label[for="auth-password"]');
 const authSubmit = document.querySelector("#auth-submit");
 const authModeToggle = document.querySelector("#auth-mode-toggle");
 const authLogout = document.querySelector("#auth-logout");
@@ -25,6 +26,8 @@ const languageCopy = {
     signUp: "Create account",
     createAccount: "New here? Create an account",
     switchToSignIn: "Already have an account? Sign in",
+    password: "Password",
+    signUpPassword: "Password (at least 8 characters)",
     installManual: "Use your browser menu and choose Install app or Add to Home Screen."
   },
   so: {
@@ -32,6 +35,8 @@ const languageCopy = {
     signUp: "Samee akoon",
     createAccount: "Akoon ma lihid? Samee mid cusub",
     switchToSignIn: "Akoon ma leedahay? Gal",
+    password: "Furaha sirta ah",
+    signUpPassword: "Furaha sirta ah (ugu yaraan 8 xaraf)",
     installManual: "Menu-ga browser-ka ka dooro Ku rakib app-ka ama Add to Home Screen."
   }
 };
@@ -73,6 +78,15 @@ function renderAuthMode() {
     : languageCopy[currentLanguage].createAccount;
   authModeToggle.dataset.i18n = isSigningUp ? "auth.switch-to-sign-in" : "auth.create-account";
   authPassword.autocomplete = isSigningUp ? "new-password" : "current-password";
+  authPasswordLabel.textContent = isSigningUp
+    ? languageCopy[currentLanguage].signUpPassword
+    : languageCopy[currentLanguage].password;
+  authPasswordLabel.dataset.i18n = isSigningUp ? "auth.password-sign-up" : "auth.password";
+  if (isSigningUp) {
+    authPassword.minLength = 8;
+  } else {
+    authPassword.removeAttribute("minlength");
+  }
   authForm.hidden = Boolean(currentUser?.emailVerified);
   googleSignIn.hidden = Boolean(currentUser);
   authForgotPassword.hidden = Boolean(currentUser) || isSigningUp;
@@ -297,7 +311,38 @@ authModeToggle.addEventListener("click", () => {
   accountMode = accountMode === "sign-in" ? "sign-up" : "sign-in";
   authStatus.textContent = "";
   delete authStatus.dataset.statusKey;
+  authEmail.setCustomValidity("");
   renderAuthMode();
+});
+
+authEmail.addEventListener("blur", () => {
+  authEmail.value = authEmail.value.trim();
+});
+
+authEmail.addEventListener("invalid", () => {
+  setAuthStatus(authEmail.validity.valueMissing ? "auth.email-required" : "auth.invalid-email");
+});
+
+authEmail.addEventListener("input", () => {
+  if (authEmail.validity.valid && ["auth.email-required", "auth.invalid-email"].includes(authStatus.dataset.statusKey)) {
+    authStatus.textContent = "";
+    delete authStatus.dataset.statusKey;
+  }
+});
+
+authPassword.addEventListener("invalid", () => {
+  if (!authEmail.validity.valid) return;
+  const statusKey = authPassword.validity.valueMissing
+    ? "auth.password-required"
+    : accountMode === "sign-up" ? "auth.weak-password" : "auth.password-required";
+  setAuthStatus(statusKey);
+});
+
+authPassword.addEventListener("input", () => {
+  if (authPassword.validity.valid && ["auth.password-required", "auth.weak-password"].includes(authStatus.dataset.statusKey)) {
+    authStatus.textContent = "";
+    delete authStatus.dataset.statusKey;
+  }
 });
 
 authForm.addEventListener("submit", async (event) => {
@@ -313,14 +358,20 @@ authForm.addEventListener("submit", async (event) => {
     const email = authEmail.value.trim();
     if (accountMode === "sign-up") {
       const credential = await firebaseAuthApi.createUserWithEmailAndPassword(firebaseAuth, email, authPassword.value);
-      await firebaseAuthApi.sendEmailVerification(credential.user);
-      setAuthStatus("auth.account-created");
+      try {
+        await firebaseAuthApi.sendEmailVerification(credential.user);
+        setAuthStatus("auth.account-created");
+      } catch (error) {
+        console.error("Account was created, but the verification email could not be sent:", error);
+        setAuthStatus(authErrorKey(error));
+      }
     } else {
       const credential = await firebaseAuthApi.signInWithEmailAndPassword(firebaseAuth, email, authPassword.value);
       if (!credential.user.emailVerified) {
         await firebaseAuthApi.sendEmailVerification(credential.user);
         setAuthStatus("auth.verify-sent");
       } else {
+        setAuthStatus("auth.signed-in");
         authDialog.close();
       }
     }

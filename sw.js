@@ -1,10 +1,10 @@
-const CACHE_NAME = "my-daily-tasks-v11";
+const CACHE_NAME = "my-daily-tasks-v14";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./style.css?v=platform-upgrade-5",
-  "./script.js?v=profile-privacy-1",
-  "./firebase.js?v=profile-privacy-1",
+  "./script.js?v=auth-validation-3",
+  "./firebase.js?v=auth-validation-3",
   "./firebase-config.js",
   "./manifest.webmanifest",
   "./icons/app-icon.svg",
